@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -7,11 +9,53 @@
 body {
     background-color: black;
     color: white;
+    font-family: 'Secular One', sans-serif;
 }
 
-.game-board {
+h1 {
+    font-size: 3rem;
+    text-align: center;
+    margin: 50px 0 50px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 60px;
+}
+
+#players {
+    display: flex;
+    gap: 130px;
+}
+
+#players div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.player-btns {
+    padding: 10px 80px;
+    font-weight: bold;
+    font-size: 1.3rem;
+
+}
+
+#game-board {
     display: grid;
-    grid-template-columns: repeat(3, 200px);
-    grid-template-rows: repeat(3, 200px);
+    grid-template-columns: repeat(3, 130px);
+    grid-template-rows: repeat(3, 130px);
 }
 
+[data-square="0"],  [data-square="1"], [data-square="2"], [data-square="3"],  [data-square="4"], [data-square="5"] {
+    border-bottom: solid white 2px;
+}
+
+[data-square="0"],  [data-square="1"], [data-square="3"],  [data-square="4"], [data-square="6"],  [data-square="7"] {
+    border-right: solid white 2px;
+}
