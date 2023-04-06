@@ -52,10 +52,22 @@ main {
     grid-template-rows: repeat(3, 130px);
 }
 
+#game-board:hover {
+    cursor: pointer;
+}
+
 [data-square="0"],  [data-square="1"], [data-square="2"], [data-square="3"],  [data-square="4"], [data-square="5"] {
     border-bottom: solid white 2px;
 }
 
 [data-square="0"],  [data-square="1"], [data-square="3"],  [data-square="4"], [data-square="6"],  [data-square="7"] {
     border-right: solid white 2px;
+}
+
+.squares {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    color: greenyellow;
 }
