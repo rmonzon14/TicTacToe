@@ -28,27 +28,54 @@ const gameBoardController = (() => {
     const player1 = Player("X");
     const player2 = Player("O");
 
-    const squaresDivs = document.getElementsByClassName("squares");    
-    const squares = Array.from(squaresDivs);
-
     const addSign = (() => {
+        const squares = document.querySelectorAll(".squares");    
+
         squares.forEach(data => {
-            data.addEventListener("click", e => {
-                if (gameBoard.getGameBoard().filter(String).length % 2 == 0) {
-                    e.target.textContent = player1.getSign();
-                    gameBoard.setGameBoard(data.getAttribute("data-square"), player1.getSign());
-                } else {
-                    e.target.textContent = player2.getSign();
-                    gameBoard.setGameBoard(data.getAttribute("data-square"), player2.getSign());
-                }
-            });
+            data.addEventListener("click", e  => {
+                handleSquareClick(e.target);
+                checkWInner();
+            }, {once: true})
         });
+
+        const handleSquareClick = (e) => {
+            if (gameBoard.getGameBoard().filter(String).length % 2 == 0) {
+                e.textContent = player1.getSign();
+                e.classList.add("cross");
+                gameBoard.setGameBoard(e.getAttribute("data-square"), player1.getSign());
+            } else {
+                e.textContent = player2.getSign();
+                e.classList.add("circle");
+                gameBoard.setGameBoard(e.getAttribute("data-square"), player2.getSign());
+            }       
+        }
     })();
 
-    if (gameBoard.getGameBoard.length() == 9) {
-        
-    }
+    const checkWInner = () => {
+        const winConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+            [2, 5, 8]
+        ]
 
+        const square = document.querySelectorAll(".squares");
+        
+        winConditions.forEach(array=> {
+            const circleWins = array.every(i => square[i].classList.contains("circle"));
+            const crossWins = array.every(i => square[i].classList.contains("cross"));
+
+            if (circleWins) {
+                console.log("Circle Wins");
+            }
+
+            if (crossWins) {
+                console.log("Cross Wins");
+            }
+        });
+    };
 })();
 
 
