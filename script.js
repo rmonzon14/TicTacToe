@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-    let gameBoardData = ["X", "O", "X", "O", "X", "O", "X", "O", "X"];
+    let gameBoardData = [];
 
     const setGameBoard = (i, data) => {
         gameBoardData[i] = data;
@@ -25,14 +25,31 @@ const Player = (sign) => {
 }
 
 const gameBoardController = (() => {
+    const player1 = Player("X");
+    const player2 = Player("O");
+
     const squaresDivs = document.getElementsByClassName("squares");    
     const squares = Array.from(squaresDivs);
 
-    squares.forEach((square, i) => {
-        square.addEventListener("click", ()  => {
-            square.textContent = gameBoard.getGameBoard()[i];
+    const addSign = (() => {
+        squares.forEach(data => {
+            data.addEventListener("click", e => {
+                if (gameBoard.getGameBoard().filter(String).length % 2 == 0) {
+                    e.target.textContent = player1.getSign();
+                    gameBoard.setGameBoard(data.getAttribute("data-square"), player1.getSign());
+                } else {
+                    e.target.textContent = player2.getSign();
+                    gameBoard.setGameBoard(data.getAttribute("data-square"), player2.getSign());
+                }
+            });
         });
-    })
+    })();
+
+    if (gameBoard.getGameBoard.length() == 9) {
+        
+    }
 
 })();
+
+
 
