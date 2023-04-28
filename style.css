@@ -71,3 +71,28 @@ main {
     font-size: 2.4rem;
     color: greenyellow;
 }
+
+.game-board-hidden {
+    opacity: 0;
+    transition: 0.7s;
+}
+
+.game-board-show {
+    opacity: 100;
+    transition: 0.7s;
+}
+
+#winner-modal {
+    display: none;
+}
+
+.winner-modal-show {
+    opacity: 100;
+    z-index: 1;
+    position: fixed;
+}
+
+.winner-modal-content {
+    font-size: 2.4rem;
+}
+
