@@ -9,7 +9,11 @@ const gameBoard = (() => {
         return gameBoardData;
     }
 
-    return {getGameBoard, setGameBoard}
+    const resetGameBoard = () => {
+        gameBoardData = [];
+    }
+
+    return {getGameBoard, setGameBoard, resetGameBoard}
 })();
 
 const Player = (sign) => {
@@ -24,10 +28,22 @@ const Player = (sign) => {
     return {getScore, getSign, updateScore}
 }
 
+const game = (() => {
+    let round = 1;
+
+    const setRound = (round) => round = round;
+
+    const getRound = () => round;
+
+    const updateRound = () => round++;
+
+    return {setRound, getRound, updateRound}
+})();
+
 const gameBoardController = (() => {
     const player1 = Player("X");
     const player2 = Player("O");
-
+    
     const addSign = (() => {
         const squares = document.querySelectorAll(".squares");    
 
@@ -58,7 +74,9 @@ const gameBoardController = (() => {
             [6, 7, 8],
             [0, 4, 8],
             [2, 4, 6],
-            [2, 5, 8]
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 3, 6]
         ]
 
         const square = document.querySelectorAll(".squares");
@@ -68,14 +86,48 @@ const gameBoardController = (() => {
             const crossWins = array.every(i => square[i].classList.contains("cross"));
 
             if (circleWins) {
-                console.log("Circle Wins");
+                showWinner("Circle");
             }
 
             if (crossWins) {
-                console.log("Cross Wins");
+                showWinner("Cross");
             }
         });
     };
+
+    const resetGameBoard = () => {
+        const squares = document.querySelectorAll(".squares");  
+
+        squares.forEach(data => {
+            data.textContent = "";
+        })
+
+        gameBoard.resetGameBoard();
+    }
+
+    const showWinner = (player) => {
+        const gameBoard = document.getElementById("game-board");
+        const winnerModal = document.getElementById("winner-modal");
+        const winnerName = document.getElementsByClassName("winner-name")[0];
+        const roundNumber = document.getElementsByClassName("round-number")[0];
+
+        gameBoard.classList.add("game-board-hidden");
+        winnerModal.classList.add("winner-modal-show");
+        winnerModal.style.display = "block";
+        winnerName.textContent = player;
+        roundNumber.textContent = game.getRound();
+
+        console.log(winnerModal);
+
+        const next = document.getElementsByClassName("next")[0];
+
+        next.addEventListener("click", () => {
+            resetGameBoard();
+            gameBoard.classList.remove("game-board-hidden");
+            gameBoard.classList.add("game-board-show");
+            
+        })
+    }
 })();
 
 
