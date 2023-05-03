@@ -49,9 +49,13 @@ const gameBoardController = (() => {
 
         squares.forEach(data => {
             data.addEventListener("click", e  => {
-                handleSquareClick(e.target);
-                checkWInner();
-            }, {once: true})
+                if (data.textContent == "") {
+                    handleSquareClick(e.target);
+                    if (gameBoard.getGameBoard().filter(String).length >= 5) {
+                        checkWInner();
+                    }      
+                }
+            })
         });
 
         const handleSquareClick = (e) => {
@@ -79,55 +83,63 @@ const gameBoardController = (() => {
             [0, 3, 6]
         ]
 
-        const square = document.querySelectorAll(".squares");
+        const squares = document.querySelectorAll(".squares");
         
         winConditions.forEach(array=> {
-            const circleWins = array.every(i => square[i].classList.contains("circle"));
-            const crossWins = array.every(i => square[i].classList.contains("cross"));
+            const circleWins = array.every(i => squares[i].classList.contains("circle"));
+            const crossWins = array.every(i => squares[i].classList.contains("cross"));
 
             if (circleWins) {
-                showWinner("Circle");
+                setTimeout(() => {
+                    showWinner("circle");
+                }, 1000)
+                setTimeout(resetGameBoard, 500);
+                player1.updateScore();
             }
 
             if (crossWins) {
-                showWinner("Cross");
+                setTimeout(() => {
+                    showWinner("cross");
+                }, 1000)         
+               setTimeout(resetGameBoard, 500);
+               player2.updateScore();
             }
         });
     };
 
-    const resetGameBoard = () => {
-        const squares = document.querySelectorAll(".squares");  
-
-        squares.forEach(data => {
-            data.textContent = "";
-        })
-
-        gameBoard.resetGameBoard();
-    }
-
     const showWinner = (player) => {
-        const gameBoard = document.getElementById("game-board");
         const winnerModal = document.getElementById("winner-modal");
         const winnerName = document.getElementsByClassName("winner-name")[0];
         const roundNumber = document.getElementsByClassName("round-number")[0];
 
-        gameBoard.classList.add("game-board-hidden");
         winnerModal.classList.add("winner-modal-show");
         winnerModal.style.display = "block";
         winnerName.textContent = player;
         roundNumber.textContent = game.getRound();
+        game.updateRound();
+    }
 
-        console.log(winnerModal);
+    const resetGameBoard = () => {
+        const winnerModal = document.getElementById("winner-modal");
+        const squares = document.querySelectorAll(".squares");  
+        const gameBoardDisplay = document.getElementById("game-board");
+
+        squares.forEach(data => {
+            data.textContent = "";
+            data.classList.remove("cross", "circle");
+        })
+
+        gameBoardDisplay.classList.add("game-board-hidden");
+        gameBoard.resetGameBoard();
 
         const next = document.getElementsByClassName("next")[0];
 
         next.addEventListener("click", () => {
-            resetGameBoard();
-            gameBoard.classList.remove("game-board-hidden");
-            gameBoard.classList.add("game-board-show");
-            
+            gameBoardDisplay.classList.remove("game-board-hidden");
+            winnerModal.style.display = "none";
         })
     }
+    
 })();
 
 
