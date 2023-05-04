@@ -26,12 +26,12 @@ main {
     gap: 60px;
 }
 
-#players {
+#players-section {
     display: flex;
     gap: 130px;
 }
 
-#players div {
+#players-section div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,11 +39,26 @@ main {
     gap: 5px;
 }
 
-.player-btns {
-    padding: 10px 80px;
+#players-section div div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.player-sign {
+    background-color: white;
+    color: black;
+    width: 160px;
+    height: 40px;
     font-weight: bold;
     font-size: 1.3rem;
+}
 
+.player-score {
+    background-color: rgb(25, 60, 25);
+    width: 90%;
+    text-align: center;
+    padding: 2px;
 }
 
 #game-board {
@@ -94,5 +109,9 @@ main {
 
 .winner-modal-content {
     font-size: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
