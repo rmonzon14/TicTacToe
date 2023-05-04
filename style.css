@@ -42,13 +42,13 @@ main {
 #players-section div div {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 10px;
 }
 
 .player-sign {
     background-color: white;
     color: black;
-    width: 160px;
+    width: 140px;
     height: 40px;
     font-weight: bold;
     font-size: 1.3rem;
@@ -56,7 +56,7 @@ main {
 
 .player-score {
     background-color: rgb(25, 60, 25);
-    width: 90%;
+    width: 45%;
     text-align: center;
     padding: 2px;
 }
@@ -115,3 +115,15 @@ main {
     justify-content: center;
 }
 
+.next {
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: rgb(25, 60, 25);
+    border-style: none;
+    color: rgb(152, 142, 142);
+    letter-spacing: 1px;
+}
+
+.next:hover {
+    color: white;
+}
