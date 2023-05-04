@@ -92,17 +92,19 @@ const gameBoardController = (() => {
             if (circleWins) {
                 setTimeout(() => {
                     showWinner("circle");
-                }, 1000)
-                setTimeout(resetGameBoard, 500);
-                player1.updateScore();
+                }, 900)
+                setTimeout(resetGameBoard, 200);
+                player2.updateScore();
+                document.getElementById("circle-score").textContent = player2.getScore();
             }
 
             if (crossWins) {
                 setTimeout(() => {
                     showWinner("cross");
-                }, 1000)         
-               setTimeout(resetGameBoard, 500);
-               player2.updateScore();
+                }, 900)         
+               setTimeout(resetGameBoard, 200);
+               player1.updateScore();
+               document.getElementById("cross-score").textContent = player1.getScore();
             }
         });
     };
@@ -112,11 +114,19 @@ const gameBoardController = (() => {
         const winnerName = document.getElementsByClassName("winner-name")[0];
         const roundNumber = document.getElementsByClassName("round-number")[0];
 
-        winnerModal.classList.add("winner-modal-show");
-        winnerModal.style.display = "block";
-        winnerName.textContent = player;
-        roundNumber.textContent = game.getRound();
-        game.updateRound();
+        if (game.getRound() < 3) {
+            winnerModal.classList.add("winner-modal-show");
+            winnerModal.style.display = "block";
+            winnerName.textContent = player;
+            roundNumber.textContent = game.getRound();
+            game.updateRound();
+        } else {
+            if (player1.getScore() > player2.getScore()) {
+                console.log("p1 won");
+            } else {
+                console.log("p2 won");
+            }
+        }
     }
 
     const resetGameBoard = () => {
@@ -139,7 +149,6 @@ const gameBoardController = (() => {
             winnerModal.style.display = "none";
         })
     }
-    
 })();
 
 
