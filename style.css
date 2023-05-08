@@ -19,6 +19,7 @@ header {
 
 h1 {
     font-size: 3.7rem;
+    color: #9abebb;
 }
 
 header p {
@@ -53,12 +54,13 @@ main {
 }
 
 .player-sign {
-    background-color: white;
-    color: black;
+    background-color: #284a47;
+    color: rgb(255, 255, 255);
     width: 140px;
     height: 40px;
     font-weight: bold;
     font-size: 1.3rem;
+    border-radius: 5px;
 }
 
 .player-score {
@@ -66,6 +68,15 @@ main {
     width: 45%;
     text-align: center;
     padding: 2px;
+    color: black;
+}
+
+#cross-score {
+    background-color: greenyellow ;
+}
+
+#circle-score {
+    background-color: #07f5dd;
 }
 
 #game-board {
@@ -91,7 +102,6 @@ main {
     align-items: center;
     justify-content: center;
     font-size: 2.4rem;
-    color: greenyellow;
 }
 
 .game-board-hidden {
@@ -126,9 +136,9 @@ main {
     margin-top: 10px;
     padding: 10px 20px;
     border-radius: 6px;
-    background-color: rgb(25, 60, 25);
+    background-color: #346662;
     border-style: none;
-    color: rgb(152, 142, 142);
+    color: #d5e4e3;
     letter-spacing: 1px;
 }
 
