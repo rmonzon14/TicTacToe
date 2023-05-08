@@ -65,10 +65,12 @@ const gameBoardController = (() => {
         const handleSquareClick = (e) => {
             if (gameBoard.getGameBoard().filter(String).length % 2 == 0) {
                 e.textContent = player1.getSign();
+                e.style.color = "greenyellow";
                 e.classList.add("cross");
                 gameBoard.setGameBoard(e.getAttribute("data-square"), player1.getSign());
             } else {
                 e.textContent = player2.getSign();
+                e.style.color = "#07f5dd";
                 e.classList.add("circle");
                 gameBoard.setGameBoard(e.getAttribute("data-square"), player2.getSign());
             }       
