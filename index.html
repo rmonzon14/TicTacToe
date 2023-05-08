@@ -11,6 +11,7 @@
 <body>
     <header>
         <h1>Tic Tac Toe</h1>
+        <p>(Best of 5)</p>
     </header>
 
     <main>
@@ -33,9 +34,14 @@
         </section>
 
         <div id="winner-modal">
-            <div class="winner-modal-content">
-                <p><span class="winner-name"></span> won round <span class="round-number"></span></p>
-                <button class="next">Play next round</button>
+            <div class="round-winner-modal">
+                <p class="round-result"></p>
+                <button class="next">Play Next Round</button>
+            </div>
+
+            <div class="game-winner-modal">
+                <p class="game-result"></p>
+                <button class="play-again">Play Again</button>
             </div>
         </div>
 
