@@ -35,24 +35,28 @@ const game = (() => {
 
     const getRound = () => round;
 
-    const updateRound = () => round++;
+    const addRound = () => round++;
 
-    return {setRound, getRound, updateRound}
+    const reduceRound = () => round--;
+
+    const resetGame = () => location.reload();
+
+    return {setRound, getRound, addRound, reduceRound, resetGame}
 })();
 
 const gameBoardController = (() => {
     const player1 = Player("X");
     const player2 = Player("O");
     
-    const addSign = (() => {
-        const squares = document.querySelectorAll(".squares");    
+    const squares = document.querySelectorAll(".squares"); 
 
+    const addSign = (() => {
         squares.forEach(data => {
             data.addEventListener("click", e  => {
                 if (data.textContent == "") {
                     handleSquareClick(e.target);
                     if (gameBoard.getGameBoard().filter(String).length >= 5) {
-                        checkWInner();
+                        checkWinner();
                     }      
                 }
             })
@@ -71,7 +75,10 @@ const gameBoardController = (() => {
         }
     })();
 
-    const checkWInner = () => {
+    const checkWinner = () => {
+
+        let isTied = true;
+
         const winConditions = [
             [0, 1, 2],
             [3, 4, 5],
@@ -82,56 +89,71 @@ const gameBoardController = (() => {
             [2, 5, 8],
             [0, 3, 6]
         ]
-
-        const squares = document.querySelectorAll(".squares");
         
         winConditions.forEach(array=> {
             const circleWins = array.every(i => squares[i].classList.contains("circle"));
             const crossWins = array.every(i => squares[i].classList.contains("cross"));
 
             if (circleWins) {
+                isTied = false;
+
                 setTimeout(() => {
-                    showWinner("circle");
+                    showResult(`Player 2 won round ${game.getRound()}`);
                 }, 900)
+
                 setTimeout(resetGameBoard, 200);
                 player2.updateScore();
                 document.getElementById("circle-score").textContent = player2.getScore();
             }
-
+            
             if (crossWins) {
+                isTied = false;
+
                 setTimeout(() => {
-                    showWinner("cross");
-                }, 900)         
+                    showResult(`Player 1 won round ${game.getRound()}`);
+                }, 900) 
+
                setTimeout(resetGameBoard, 200);
                player1.updateScore();
                document.getElementById("cross-score").textContent = player1.getScore();
-            }
+            } 
         });
+
+        if (gameBoard.getGameBoard().filter(String).length == 9 && isTied) {
+            setTimeout(() => {
+                showResult("It's a tie!");
+            }, 900) 
+
+           setTimeout(resetGameBoard, 200);
+           game.reduceRound();
+        }
     };
 
-    const showWinner = (player) => {
+    const showResult = (result) => {
         const winnerModal = document.getElementById("winner-modal");
-        const winnerName = document.getElementsByClassName("winner-name")[0];
-        const roundNumber = document.getElementsByClassName("round-number")[0];
+        const roundResult = document.getElementsByClassName("round-result")[0];
 
-        if (game.getRound() < 3) {
-            winnerModal.classList.add("winner-modal-show");
-            winnerModal.style.display = "block";
-            winnerName.textContent = player;
-            roundNumber.textContent = game.getRound();
-            game.updateRound();
-        } else {
+        winnerModal.style.display = "block";
+
+        if (player1.getScore() == 3 || player2.getScore() == 3) {
+            document.getElementsByClassName("game-winner-modal")[0].setAttribute("style", "font-size: 2.4rem; display: flex; flex-direction: column; align-items: center; justify-content: center;");
+            document.getElementsByClassName("round-winner-modal")[0].style.display = "none";
+
             if (player1.getScore() > player2.getScore()) {
-                console.log("p1 won");
+                document.getElementsByClassName("game-result")[0].textContent = "Player 1 Won The Game";
             } else {
-                console.log("p2 won");
+                document.getElementsByClassName("game-result")[0].textContent = "Player 2 Won The Game";
             }
+
+        } else {
+            winnerModal.classList.add("winner-modal-show");
+            game.addRound();
+            roundResult.textContent = result;
         }
     }
 
     const resetGameBoard = () => {
         const winnerModal = document.getElementById("winner-modal");
-        const squares = document.querySelectorAll(".squares");  
         const gameBoardDisplay = document.getElementById("game-board");
 
         squares.forEach(data => {
@@ -143,12 +165,16 @@ const gameBoardController = (() => {
         gameBoard.resetGameBoard();
 
         const next = document.getElementsByClassName("next")[0];
-
         next.addEventListener("click", () => {
             gameBoardDisplay.classList.remove("game-board-hidden");
             winnerModal.style.display = "none";
         })
     }
+
+    const playAgain = document.getElementsByClassName("play-again")[0];
+    playAgain.addEventListener("click", () => {
+        game.resetGame();
+    });
 })();
 
 
